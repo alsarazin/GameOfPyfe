@@ -21,14 +21,19 @@ class Cell:
 class Board:
 	"""Class defining a  board"""
 
-	def __init__(self, size):
-		self.size = size
+	def __init__(self, *args):
+		if len(args) == 2:
+			self.length = args[0]
+			self.width = args[1]
+		else:
+			self.length = args[0]
+			self.width = args[0]
 		self.lines = []
-		for i in range(0,size):
+		for i in range(0,self.width):
 			aLine = []
-			for j in range(0,size):
+			for j in range(0,self.length):
 				aLine.append(Cell(0))
-			self.lines.append(aLine) 	
+			self.lines.append(aLine)
 
 	def __str__(self):
 		res = ""
@@ -51,19 +56,19 @@ class Board:
 			if column == 0:	#if up-left corner
 				alives = countAlives([self.lines[line][column+1],cell_down,self.lines[line+1][column+1]])
 			
-			elif column == self.size-1: #if up-right corner
+			elif column == self.length-1: #if up-right corner
 				alives = countAlives([self.lines[line][column-1],cell_down,self.lines[line+1][column-1]])
 			
 			else:
 				alives = countAlives([self.lines[line][column-1],self.lines[line][column+1],self.lines[line+1][column-1],cell_down,self.lines[line+1][column+1]])
 		
-		elif line == self.size-1: #if bottom line
+		elif line == self.width-1: #if bottom line
 			cell_up = self.lines[line-1][column]
 			
 			if column == 0: #if down-left corner
 				alives = countAlives([self.lines[line][column+1], cell_up, self.lines[line-1][column+1]])
 			
-			elif column == self.size-1: #if down-right corner
+			elif column == self.length-1: #if down-right corner
 				alives = countAlives([self.lines[line][column-1], cell_up, self.lines[line-1][column-1]])
 			
 			else:
@@ -72,7 +77,7 @@ class Board:
 		elif column == 0: #if left column except corners
 			alives = countAlives([self.lines[line-1][column],self.lines[line-1][column+1],self.lines[line][column+1],self.lines[line+1][column+1], self.lines[line+1][column]])
 		
-		elif column == self.size-1: # if right column except corners
+		elif column == self.length-1: # if right column except corners
 			alives = countAlives([self.lines[line-1][column],self.lines[line-1][column-1],self.lines[line][column-1],self.lines[line+1][column-1], self.lines[line+1][column]])
 		
 		else: #all the other cells
@@ -91,8 +96,8 @@ class Board:
 
 	def tick(self):
 		new_board = copy.deepcopy(self)
-		for line in range(0,new_board.size-1):
-			for column in range(0,new_board.size-1):
+		for line in range(0,new_board.width-1):
+			for column in range(0,new_board.length-1):
 				new_board.lines[line][column].state = board.evolution(line,column)
 
 		board.lines = new_board.lines
@@ -104,7 +109,7 @@ def countAlives(cells):
 			alives += 1
 	return alives
 
-board = Board(40)
+board = Board(40,27)
 
 #----------GUN SLIDER-------------
 board.lines[4][0].state = 1
