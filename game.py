@@ -1,6 +1,9 @@
 #!/usr/bin/python
 
-import copy,time
+from copy import deepcopy
+from time import sleep
+from kivy.app import App
+from kivy.uix.widget import Widget
 
 class Cell:
 	"""A cell"""
@@ -95,7 +98,7 @@ class Board:
 		return new_state
 
 	def tick(self):
-		new_board = copy.deepcopy(self)
+		new_board = deepcopy(self)
 		for line in range(0,new_board.width-1):
 			for column in range(0,new_board.length-1):
 				new_board.lines[line][column].state = board.evolution(line,column)
@@ -109,55 +112,56 @@ def countAlives(cells):
 			alives += 1
 	return alives
 
-board = Board(40,27)
+if __name__ == '__main__':
+	board = Board(40,27)
 
-#----------GUN SLIDER-------------
-board.lines[4][0].state = 1
-board.lines[5][0].state = 1
-board.lines[4][1].state = 1
-board.lines[5][1].state = 1
+	#----------GUN SLIDER-------------
+	board.lines[4][0].state = 1
+	board.lines[5][0].state = 1
+	board.lines[4][1].state = 1
+	board.lines[5][1].state = 1
 
-board.lines[2][13].state = 1
-board.lines[2][12].state = 1
-board.lines[3][11].state = 1
-board.lines[4][10].state = 1
-board.lines[5][10].state = 1
-board.lines[6][10].state = 1
-board.lines[7][11].state = 1
-board.lines[8][12].state = 1
-board.lines[8][13].state = 1
-board.lines[7][15].state = 1
+	board.lines[2][13].state = 1
+	board.lines[2][12].state = 1
+	board.lines[3][11].state = 1
+	board.lines[4][10].state = 1
+	board.lines[5][10].state = 1
+	board.lines[6][10].state = 1
+	board.lines[7][11].state = 1
+	board.lines[8][12].state = 1
+	board.lines[8][13].state = 1
+	board.lines[7][15].state = 1
 
-board.lines[5][14].state = 1
-board.lines[3][15].state = 1
-board.lines[7][15].state = 1
+	board.lines[5][14].state = 1
+	board.lines[3][15].state = 1
+	board.lines[7][15].state = 1
 
-board.lines[4][16].state = 1
-board.lines[5][16].state = 1
-board.lines[6][16].state = 1
-board.lines[5][17].state = 1
+	board.lines[4][16].state = 1
+	board.lines[5][16].state = 1
+	board.lines[6][16].state = 1
+	board.lines[5][17].state = 1
 
-board.lines[2][20].state = 1
-board.lines[3][20].state = 1
-board.lines[4][20].state = 1
-board.lines[2][21].state = 1
-board.lines[3][21].state = 1
-board.lines[4][21].state = 1
-board.lines[1][22].state = 1
-board.lines[5][22].state = 1
-board.lines[0][24].state = 1
-board.lines[1][24].state = 1
-board.lines[5][24].state = 1
-board.lines[6][24].state = 1
+	board.lines[2][20].state = 1
+	board.lines[3][20].state = 1
+	board.lines[4][20].state = 1
+	board.lines[2][21].state = 1
+	board.lines[3][21].state = 1
+	board.lines[4][21].state = 1
+	board.lines[1][22].state = 1
+	board.lines[5][22].state = 1
+	board.lines[0][24].state = 1
+	board.lines[1][24].state = 1
+	board.lines[5][24].state = 1
+	board.lines[6][24].state = 1
 
-board.lines[2][35].state = 1
-board.lines[3][35].state = 1
-board.lines[2][34].state = 1
-board.lines[3][34].state = 1
-#--------------------------------------------
+	board.lines[2][35].state = 1
+	board.lines[3][35].state = 1
+	board.lines[2][34].state = 1
+	board.lines[3][34].state = 1
+	#--------------------------------------------
 
-print board
-while 1:
-	time.sleep(0.1)
-	board.tick()
 	print board
+	while 1:
+		sleep(0.1)
+		board.tick()
+		print board
